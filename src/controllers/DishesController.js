@@ -40,9 +40,7 @@ class DishesController {
     const { id } = request.params;
 
     const dish = await knex("dishes").where({ id }).first();
-    const ingredients = await knex("ingredients")
-      .where({ dish_id: id })
-      .orderBy("name");
+    const ingredients = await knex("ingredients").where({ dish_id: id }).orderBy("name");
 
     return response.json({
       ...dish,
@@ -133,12 +131,14 @@ class DishesController {
               builder2.orWhere("dishes.description", "like", keyword);
             });
           });
+          
           keywords.forEach((keyword) => {
             builder.orWhere("ingredients.name", "like", keyword);
           });
         })
         .groupBy("dishes.id")
         .orderBy("dishes.name");
+        
     } else {
       dishes = await knex("dishes")
         .select([

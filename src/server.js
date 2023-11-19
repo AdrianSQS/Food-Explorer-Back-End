@@ -12,6 +12,7 @@ const routes = require("./routes");
 migrationsRun();
 
 const app = express();
+
 app.use(cors());
 app.use(express.json());
 

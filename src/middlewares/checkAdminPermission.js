@@ -7,7 +7,7 @@ async function checkAdminPermission(request, response, next) {
   const user = await knex("users").where({ id: user_id }).first();
 
   if (!user.is_admin) {
-    throw new AppError("Apenas usuários administradores podem realizar esta ação.", 403);
+    throw new AppError("Está ação está restrita a usuários com direitos administrativos.", 403);
   }
 
   return next();

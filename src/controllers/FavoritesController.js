@@ -28,9 +28,7 @@ class FavoritesController {
     const { dish_id } = request.params;
     const user_id = request.user.id;
 
-    await knex("favorites")
-      .where({ user_id, dish_id })
-      .delete();
+    await knex("favorites").where({ user_id, dish_id }).delete();
 
     return response.json();
   }

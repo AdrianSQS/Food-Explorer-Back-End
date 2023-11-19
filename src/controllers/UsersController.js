@@ -30,12 +30,11 @@ class UsersController {
     }
 
     const userWithUpdatedEmail = await database.get(
-      "SELECT * FROM users WHERE email = (?)",
-      [email]
+      "SELECT * FROM users WHERE email = (?)", [email]
     );
 
     if (userWithUpdatedEmail && userWithUpdatedEmail.id !== user.id) {
-      throw new AppError("Este e-mail já está em uso.");
+      throw new AppError("Este e-mail já se encontra registrado.");
     }
 
     user.name = name ?? user.name;
@@ -43,7 +42,7 @@ class UsersController {
 
     if (password && !old_password) {
       throw new AppError(
-        "Você precisa informar a senha antiga para definir a nova senha."
+        "Para definir uma nova senha, é obrigatório informar a senha anterior."
       );
     }
 
@@ -51,7 +50,7 @@ class UsersController {
       const checkOldPassword = await compare(old_password, user.password);
 
       if (!checkOldPassword) {
-        throw new AppError("A senha antiga não confere.");
+        throw new AppError("A senha antiga fornecida não está correta.");
       }
 
       user.password = await hash(password, 8);
@@ -59,7 +58,7 @@ class UsersController {
 
     if (is_admin !== undefined && user.id !== request.userId && !user.is_admin) {
       throw new AppError(
-        "Você não tem permissão para atualizar o campo 'is_admin'.", 403
+        "Você não possui autorização para modificar o campo 'is_admin'", 403
       );
     }
 

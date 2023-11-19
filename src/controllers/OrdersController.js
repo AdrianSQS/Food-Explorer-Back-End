@@ -32,9 +32,7 @@ class OrdersController {
     const { id } = request.params;
 
     const order = await knex("orders").where({ id }).first();
-    const order_items = await knex("order_items")
-      .where({ order_id: id })
-      .orderBy("name");
+    const order_items = await knex("order_items").where({ order_id: id }).orderBy("name");
 
     return response.json({
       ...order,
@@ -86,6 +84,7 @@ class OrdersController {
         ])
         .innerJoin("users", "users.id", "orders.created_by")
         .orderBy("orders.created_at", "desc");
+
       } else {
         orders = await knex("orders")
           .select([

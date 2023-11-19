@@ -1,11 +1,10 @@
 const { Router } = require("express");
 
-const OrdersController = require("../controllers/OrdersController");
-const ensureAuthenticated = require("../middlewares/ensureAuthenticated");
 const checkAdminPermission = require("../middlewares/checkAdminPermission");
+const ensureAuthenticated = require("../middlewares/ensureAuthenticated");
+const OrdersController = require("../controllers/OrdersController");
 
 const ordersRoutes = Router();
-
 const ordersController = new OrdersController();
 
 ordersRoutes.use(ensureAuthenticated);
