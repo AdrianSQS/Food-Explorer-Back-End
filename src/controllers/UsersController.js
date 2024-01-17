@@ -13,7 +13,7 @@ class UsersController {
     const userRepository = new UserRepository();
     const userCreateService = new UserCreateService(userRepository);
 
-    await UserCreateService.execute({ name, email, password, is_admin })
+    await userCreateService.execute({ name, email, password, is_admin })
 
     return response.status(201).json();
   }
